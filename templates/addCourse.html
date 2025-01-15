@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<h2 class="text-center mb-4">Ma'lumot qo'shish</h2>
+
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  {% if forms.non_field_errors %}
+    <div class="alert alert-danger alert-dismissible fade show text-center position-fixed top-0 start-50 translate-middle-x mt-3" role="alert" style="width: 50%; z-index: 1050; margin-top: 10px;">
+        {% for error in forms.non_field_errors %}
+            <p style="font-size: 0.875rem;">{{ error }}</p>
+        {% endfor %}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endif %}
+
+  {% for field in forms %}
+    <div class="mb-3">
+      <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+
+      {% if field.errors %}
+        <div class="alert alert-danger alert-dismissible fade show text-center position-fixed top-0 start-50 translate-middle-x mt-3" role="alert" style="width: 50%; z-index: 1050; margin-top: 10px;">
+          {% for error in field.errors %}
+            <p style="font-size: 0.875rem;">{{ error }}</p>
+          {% endfor %}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endif %}
+
+      {{ field }}
+    </div>
+  {% endfor %}
+
+  <button class="btn btn-primary" type="submit">Saqlash</button>
+
+</form>
+
+{% endblock main %}
